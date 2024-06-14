@@ -1,0 +1,13 @@
+**/__pycache__/
+.idea
+.env
+
+*.db
+
+test
+test_main.http
+
+.DS_Store
+
+Pipfile
+Pipfile.lock
