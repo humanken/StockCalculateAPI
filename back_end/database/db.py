@@ -3,12 +3,14 @@ from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 from sqlalchemy.ext.declarative import declarative_base
 
+# use sqlite when local
+SQLALCHEMY_DATABASE_URL = "sqlite:///./back_end/database/stock_app.db"
 
-# SQLALCHEMY_DATABASE_URL = "sqlite:///./back_end/database/stock_app.db"
-SQLALCHEMY_DATABASE_URL = \
-    f"mysql+mysqldb://" \
-    f"{environ.get('MYSQL_USER')}:{environ.get('MYSQL_PASSWORD')}@db/" \
-    f"{environ.get('MYSQL_NAME')}"
+# use mysql when docker compose
+# SQLALCHEMY_DATABASE_URL = \
+#     f"mysql+mysqldb://" \
+#     f"{environ.get('MYSQL_USER')}:{environ.get('MYSQL_PASSWORD')}@db/" \
+#     f"{environ.get('MYSQL_NAME')}"
 
 engine = create_engine(
     SQLALCHEMY_DATABASE_URL,
