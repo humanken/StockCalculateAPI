@@ -1,4 +1,4 @@
-import uvicorn
+import os
 import time
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
@@ -19,8 +19,6 @@ app.add_middleware(
     allow_origins=[
         'http://127.0.0.1:8001',
         'http://localhost:8317',
-        'http://192.168.3.117:8317',
-        'http://192.168.6.76:8317',
         'https://calculate.hotpeperken.com'
     ],
     allow_credentials=True,
@@ -28,7 +26,7 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-app.add_middleware(SessionMiddleware, secret_key='humanken-0317')
+app.add_middleware(SessionMiddleware, secret_key=os.getenv('SECRET_KEY'))
 
 ROUTER_PREFIX = "/api/v0"
 app.include_router(category_router, prefix=ROUTER_PREFIX)
