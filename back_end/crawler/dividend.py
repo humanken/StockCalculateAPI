@@ -1,5 +1,5 @@
 # back_end/crawler/dividend.py
-
+import os
 import time, random
 from datetime import datetime
 from fake_useragent import UserAgent
@@ -26,9 +26,6 @@ class DividendCrawler:
 
     @staticmethod
     def _setup_driver() -> WebDriver:
-        driver_path = ChromeDriverManager().install()
-        service = Service(executable_path=driver_path)
-
         options = webdriver.ChromeOptions()
         # 關閉 'chrome正在自動化' 提示
         options.add_experimental_option("excludeSwitches", ['enable-automation'])
@@ -36,7 +33,17 @@ class DividendCrawler:
         options.add_argument("--headless")
         # 設置請求標頭
         options.add_argument("user-agent=%s" % UserAgent().random)
-        driver = webdriver.Chrome(service=service, options=options)
+
+        # use driver when local
+        driver = webdriver.Chrome(
+            service=Service(executable_path=ChromeDriverManager().install()),
+            options=options
+        )
+        # use driver when deploy docker compose
+        # driver = webdriver.Remote(
+        #     command_executor='http://selenium:4444/wd/hub',
+        #     options=options
+        # )
         return driver
 
     @staticmethod
